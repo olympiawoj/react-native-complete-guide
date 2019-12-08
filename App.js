@@ -5,13 +5,16 @@ import GoalInput from "./components/GoalInput"
 
 export default function App() {
 
-
   //courseGoals is an array of objects-
   const [courseGoals, setCourseGoals] = useState([])
   const [isAddMode, setIsAddMode] = useState(false)
-
+  console.log("RE_RENDERING COMPONENT")
+  console.log(courseGoals)
 
   const addGoalHandler = (goalTitle) => {
+    if (goalTitle.length === 0) {
+      return;
+    }
     //functional form of updateState to updateState based on prev
     setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: goalTitle }])
     console.log('this is running')
@@ -19,6 +22,8 @@ export default function App() {
   }
 
   const removeGoalHandler = (goalId) => {
+    console.log(courseGoals)
+    console.log('to be deleted', goalId)
     setCourseGoals(currentGoals => {
       //Filter returns new array based on certain critera, true to keep item, false to drop it
       return currentGoals.filter((currentGoal) => currentGoal.id !== goalId)
