@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, Button, FlatList } from 'react-native';
 import GoalItem from "./components/GoalItem"
 import GoalInput from "./components/GoalInput"
 
@@ -8,13 +8,14 @@ export default function App() {
 
   //courseGoals is an array of objects-
   const [courseGoals, setCourseGoals] = useState([])
+  const [isAddMode, setIsAddMode] = useState(false)
 
 
   const addGoalHandler = (goalTitle) => {
     //functional form of updateState to updateState based on prev
     setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: goalTitle }])
     console.log('this is running')
-    // setEnteredGoal('')
+    setIsAddMode(false)
   }
 
   const removeGoalHandler = (goalId) => {
@@ -24,10 +25,15 @@ export default function App() {
     })
   }
 
+  const cancelGoalAdditionHandler = () => {
+    setIsAddMode(false)
+  }
+
   return (  //in pros, I need goalInoutHandler, eneteredGoal, and addGoalHandler
 
     <View style={styles.screen}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button title="Add New Goal" onPress={() => setIsAddMode(true)} />
+      <GoalInput onAddGoal={addGoalHandler} visible={isAddMode} onCancel={cancelGoalAdditionHandler} />
 
       <FlatList
         keyExtractor={(item, index) => item.id}
