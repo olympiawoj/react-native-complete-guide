@@ -1,39 +1,32 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import GoalItem from "./components/GoalItem"
+import GoalInput from "./components/GoalInput"
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('')
+
 
   //courseGoals is an array of objects-
   const [courseGoals, setCourseGoals] = useState([])
 
-  const goalInputHandler = (enteredText) => {
-    setEnteredGoal(enteredText)
 
-  }
-
-  const addGoalHandler = () => {
+  const addGoalHandler = (goalTitle) => {
     //functional form of updateState to updateState based on prev
-    setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: enteredGoal }])
+    setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: goalTitle }])
     console.log('this is running')
     // setEnteredGoal('')
   }
 
-  return (
+  return (  //in pros, I need goalInoutHandler, eneteredGoal, and addGoalHandler
 
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="Course Goal" style={styles.input} onChangeText={goalInputHandler} value={enteredGoal} />
-        <Button title="Add" onPress={addGoalHandler} />
-      </View>
+      <GoalInput onAddGoal={addGoalHandler} />
 
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={itemData => (
-          <View style={styles.listItem}>
-            < Text  > {itemData.item.value}</Text>
-          </View>
+          <GoalItem title={itemData.item.value} />
         )} />
 
 
@@ -44,25 +37,6 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 50
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: "space-between",
-    alignItems: 'center'
-  },
-  input: {
-    width: '80%',
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 10
-  },
-  listItem: {
-    padding: 10,
-    //margin top and bottom, but not left and write (not available in CSS b/c marginVertical is not a property you have in CSS, but you have it in RN)
-    marginVertical: 10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1
   }
 });
 
