@@ -17,6 +17,13 @@ export default function App() {
     // setEnteredGoal('')
   }
 
+  const removeGoalHandler = (goalId) => {
+    setCourseGoals(currentGoals => {
+      //Filter returns new array based on certain critera, true to keep item, false to drop it
+      return currentGoals.filter((currentGoal) => currentGoal.id !== goalId)
+    })
+  }
+
   return (  //in pros, I need goalInoutHandler, eneteredGoal, and addGoalHandler
 
     <View style={styles.screen}>
@@ -26,7 +33,7 @@ export default function App() {
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={itemData => (
-          <GoalItem title={itemData.item.value} onDelete={() => console.log("learn RN")} />
+          <GoalItem title={itemData.item.value} onDelete={removeGoalHandler} id={itemData.item.id} />
         )} />
 
 
