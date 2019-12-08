@@ -7,11 +7,14 @@ export default function App() {
 
   const goalInputHandler = (enteredText) => {
     setEnteredGoal(enteredText)
+
   }
 
   const addGoalHandler = () => {
     //functional form of updateState to updateState based on prev
     setCourseGoals(currentGoals => [...currentGoals, enteredGoal])
+    console.log('this is running')
+    setEnteredGoal('')
   }
 
   return (
@@ -21,7 +24,8 @@ export default function App() {
         <Button title="Add" onPress={addGoalHandler} />
       </View>
       <View>
-
+        {courseGoals.map(courseGoal => <View key={courseGoal} style={styles.listItem}>< Text  > {courseGoal}</Text></View>
+        )}
       </View>
     </View >
   );
@@ -41,6 +45,14 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     padding: 10
+  },
+  listItem: {
+    padding: 10,
+    //margin top and bottom, but not left and write (not available in CSS b/c marginVertical is not a property you have in CSS, but you have it in RN)
+    marginVertical: 10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1
   }
 });
 
