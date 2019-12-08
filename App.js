@@ -26,7 +26,7 @@ export default function App() {
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={itemData => (
-          <GoalItem title={itemData.item.value} />
+          <GoalItem title={itemData.item.value} onDelete={() => console.log("learn RN")} />
         )} />
 
 
